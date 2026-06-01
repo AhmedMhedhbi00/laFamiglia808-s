@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaFamiglia808 — Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0A0A0A;color:#F5F5F5;font-family:'Space Grotesk',sans-serif;overflow-x:hidden;margin:0}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#DC2626}
+::selection{background:#DC2626;color:#fff}
+.font-display{font-family:'Bebas Neue',sans-serif}
+.font-mono{font-family:'JetBrains Mono',monospace}
+.nav-link{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:#888;transition:color .2s;position:relative}
+.nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#DC2626;transition:width .3s}
+.nav-link:hover{color:#F5F5F5}.nav-link:hover::after{width:100%}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(220,38,38,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(220,38,38,.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,12vw,10rem);line-height:.9;letter-spacing:-.02em}
+.bg-808{position:absolute;right:-5vw;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(12rem,30vw,28rem);color:rgba(220,38,38,.04);line-height:1;user-select:none;pointer-events:none;white-space:nowrap}
+.waveform{display:flex;align-items:center;gap:3px;height:40px}
+.wave-bar{width:3px;background:#DC2626;border-radius:2px;animation:wave 1.2s ease-in-out infinite}
+@keyframes wave{0%,100%{height:8px;opacity:.3}50%{height:36px;opacity:1}}
+.stat-number{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:#DC2626;line-height:1}
+.card-hover{border:1px solid #2A2A2A;transition:border-color .3s,transform .3s}
+.card-hover:hover{border-color:#DC2626;transform:translateY(-4px)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-inner{animation:marquee 20s linear infinite}
+.btn-red{background:#DC2626;color:#fff;font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;padding:.875rem 2rem;border:1px solid #DC2626;transition:all .2s;display:inline-block;cursor:pointer;text-decoration:none}
+.btn-red:hover{background:transparent;color:#DC2626;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:#F5F5F5;font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;padding:.875rem 2rem;border:1px solid #2A2A2A;transition:all .2s;display:inline-block;cursor:pointer;text-decoration:none}
+.btn-outline:hover{border-color:#DC2626;color:#DC2626;transform:translateY(-1px)}
+.red-line{width:60px;height:2px;background:#DC2626}
+.red-dot::before{content:'//';color:#DC2626;font-family:'JetBrains Mono',monospace;margin-right:.5rem;font-size:.875rem}
+.particle{position:absolute;border-radius:50%;background:#DC2626;opacity:.15;animation:float linear infinite}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+/* Admin preview */
+.sidebar-link{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#888;border-left:2px solid transparent;transition:all .2s;text-decoration:none}
+.sidebar-link:hover,.sidebar-link.active{color:#F5F5F5;border-left-color:#DC2626;background:rgba(220,38,38,.05)}
+.admin-card{background:#111;border:1px solid #1A1A1A;padding:1.5rem}
+</style>
+</head>
+<body>
+
+<!-- NAV PREVIEW TOGGLE -->
+<div style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;">
+  <button onclick="showSection('public')" id="btn-public"
+    style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;background:#DC2626;color:#fff;border:none;cursor:pointer;">
+    SITO PUBBLICO
+  </button>
+  <button onclick="showSection('admin')" id="btn-admin"
+    style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;background:#111;color:#888;border:1px solid #2A2A2A;cursor:pointer;">
+    ADMIN PANEL
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  SEZIONE PUBBLICA                                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="section-public">
+
+<!-- NAV -->
+<header style="position:sticky;top:0;z-index:50;background:rgba(10,10,10,.92);backdrop-filter:blur(16px);border-bottom:1px solid #1A1A1A;">
+  <nav style="max-width:1280px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <div style="display:flex;align-items:center;gap:.75rem;">
+      <span style="width:8px;height:8px;background:#DC2626;display:block;"></span>
+      <span class="font-display" style="color:#fff;font-size:1.25rem;letter-spacing:.2em;">LAFAMIGLIA808</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:2rem;">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#services" class="nav-link">Servizi</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
+      <a href="#about" class="nav-link">Chi Siamo</a>
+      <a href="#contact" class="btn-red" style="font-size:.7rem;">Contattaci</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="home" style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;">
+  <div class="hero-grid"></div>
+  <div class="bg-808">808</div>
+  <div class="particle" style="left:10%;top:15%;width:6px;height:6px;animation-duration:4s;"></div>
+  <div class="particle" style="left:75%;top:25%;width:4px;height:4px;animation-duration:6s;animation-delay:.5s;"></div>
+  <div class="particle" style="left:85%;top:60%;width:5px;height:5px;animation-duration:3s;animation-delay:1s;"></div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:6rem 1.5rem;position:relative;z-index:10;">
+    <div style="max-width:780px;">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;">
+        <div class="waveform">
+          <div class="wave-bar" style="animation-delay:0s;"></div>
+          <div class="wave-bar" style="animation-delay:.1s;"></div>
+          <div class="wave-bar" style="animation-delay:.2s;"></div>
+          <div class="wave-bar" style="animation-delay:.3s;"></div>
+          <div class="wave-bar" style="animation-delay:.4s;"></div>
+          <div class="wave-bar" style="animation-delay:.5s;"></div>
+          <div class="wave-bar" style="animation-delay:.4s;"></div>
+          <div class="wave-bar" style="animation-delay:.3s;"></div>
+          <div class="wave-bar" style="animation-delay:.2s;"></div>
+          <div class="wave-bar" style="animation-delay:.1s;"></div>
+        </div>
+        <span class="font-mono" style="font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#DC2626;">Roma — Studio di Produzione</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span style="display:block;color:#fff;">LA</span>
+        <span style="display:block;color:#DC2626;">FAMIGLIA</span>
+        <span style="display:block;color:#fff;">808<span style="color:#DC2626;">'S</span></span>
+      </h1>
+
+      <p style="color:#888;font-size:1.125rem;line-height:1.7;max-width:420px;margin:2rem 0 2.5rem;">
+        Beats che colpiscono. Sound che resta.<br>
+        Produzione professionale per artisti che non accettano compromessi.
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:4rem;">
+        <a href="#services" class="btn-red">Esplora Servizi</a>
+        <a href="#portfolio" class="btn-outline">Ascolta il Portfolio</a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;">
+        <div style="border-left:2px solid #DC2626;padding-left:1.5rem;">
+          <div class="stat-number">100+</div>
+          <div class="font-mono" style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#888;">Beats Prodotti</div>
+        </div>
+        <div style="border-left:2px solid #DC2626;padding-left:1.5rem;">
+          <div class="stat-number">50+</div>
+          <div class="font-mono" style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#888;">Artisti</div>
+        </div>
+        <div style="border-left:2px solid #DC2626;padding-left:1.5rem;">
+          <div class="stat-number">5+</div>
+          <div class="font-mono" style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#888;">Anni di Exp.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <span class="font-mono" style="font-size:.7rem;letter-spacing:.15em;color:#333;">SCROLL</span>
+    <div style="width:1px;height:60px;background:linear-gradient(to bottom,#DC2626,transparent);"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div style="overflow:hidden;padding:1rem 0;background:#111;border-top:1px solid #1A1A1A;border-bottom:1px solid #1A1A1A;">
+  <div class="marquee-inner" style="display:flex;white-space:nowrap;width:max-content;">
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#fff;margin:0 2rem;">LAFAMIGLIA808</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#2A2A2A;margin:0 2rem;">BEAT PRODUCTION</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#fff;margin:0 2rem;">LAFAMIGLIA808</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#2A2A2A;margin:0 2rem;">MIXING & MASTERING</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#fff;margin:0 2rem;">LAFAMIGLIA808</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#2A2A2A;margin:0 2rem;">BEAT PRODUCTION</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#fff;margin:0 2rem;">LAFAMIGLIA808</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+    <span class="font-display" style="font-size:1.5rem;letter-spacing:.2em;color:#2A2A2A;margin:0 2rem;">MIXING & MASTERING</span>
+    <span class="font-display" style="font-size:1.5rem;color:#DC2626;margin:0 2rem;">★</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" style="padding:6rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;flex-wrap:wrap;gap:1.5rem;">
+      <div>
+        <p class="font-mono red-dot" style="font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#DC2626;margin-bottom:.75rem;">Cosa facciamo</p>
+        <h2 class="font-display" style="font-size:clamp(3rem,6vw,5rem);color:#fff;">SERVIZI</h2>
+        <div class="red-line" style="margin-top:1rem;"></div>
+      </div>
+      <a href="#" class="btn-outline">Vedi tutti →</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+      <!-- Service 1 -->
+      <div class="card-hover" style="background:#111;padding:2rem;position:relative;overflow:hidden;">
+        <span class="font-display" style="position:absolute;top:1.5rem;right:1.5rem;font-size:3.5rem;color:#1A1A1A;line-height:1;">01</span>
+        <div style="width:48px;height:48px;border:1px solid #2A2A2A;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+          <svg style="width:24px;height:24px;color:#DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.75rem;">Beat Production</h3>
+        <p style="font-size:.875rem;line-height:1.7;color:#888;margin-bottom:1.5rem;">Produzione di beat su misura per artisti Hip-Hop, Trap, R&B. Ogni beat costruito con samples rari e drum programming chirurgico.</p>
+        <div class="font-mono" style="font-size:.875rem;color:#DC2626;">Da €150</div>
+      </div>
+      <!-- Service 2 -->
+      <div class="card-hover" style="background:#111;padding:2rem;position:relative;overflow:hidden;">
+        <span class="font-display" style="position:absolute;top:1.5rem;right:1.5rem;font-size:3.5rem;color:#1A1A1A;line-height:1;">02</span>
+        <div style="width:48px;height:48px;border:1px solid #2A2A2A;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+          <svg style="width:24px;height:24px;color:#DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.75rem;">Mixing & Mastering</h3>
+        <p style="font-size:.875rem;line-height:1.7;color:#888;margin-bottom:1.5rem;">Missaggio e mastering professionale. Ogni traccia lavorata per suonare forte e chiaro su qualsiasi sistema audio.</p>
+        <div class="font-mono" style="font-size:.875rem;color:#DC2626;">Da €80</div>
+      </div>
+      <!-- Service 3 -->
+      <div class="card-hover" style="background:#111;padding:2rem;position:relative;overflow:hidden;">
+        <span class="font-display" style="position:absolute;top:1.5rem;right:1.5rem;font-size:3.5rem;color:#1A1A1A;line-height:1;">03</span>
+        <div style="width:48px;height:48px;border:1px solid #2A2A2A;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+          <svg style="width:24px;height:24px;color:#DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+        </div>
+        <h3 style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.75rem;">Sessione di Registrazione</h3>
+        <p style="font-size:.875rem;line-height:1.7;color:#888;margin-bottom:1.5rem;">Studio completamente equipaggiato per sessioni vocal, strumentali e podcast. Microfoni top di gamma.</p>
+        <div class="font-mono" style="font-size:.875rem;color:#DC2626;">Da €60/h</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" style="padding:6rem 1.5rem;background:#0D0D0D;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;flex-wrap:wrap;gap:1.5rem;">
+      <div>
+        <p class="font-mono red-dot" style="font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#DC2626;margin-bottom:.75rem;">I nostri lavori</p>
+        <h2 class="font-display" style="font-size:clamp(3rem,6vw,5rem);color:#fff;">PORTFOLIO</h2>
+        <div class="red-line" style="margin-top:1rem;"></div>
+      </div>
+      <a href="#" class="btn-outline">Vedi tutto →</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+      <!-- Portfolio items -->
+      <div style="aspect-ratio:1;position:relative;overflow:hidden;cursor:pointer;" class="card-hover">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#1A1A1A 0%,#2A0A0A 100%);display:flex;align-items:center;justify-content:center;">
+          <span class="font-display" style="font-size:5rem;color:#DC2626;opacity:.2;">808</span>
+        </div>
+        <div style="position:absolute;inset:0;padding:1.5rem;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.5) 60%,transparent 100%);opacity:0;transition:opacity .3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+          <p class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#DC2626;margin-bottom:.25rem;">Dark Trap</p>
+          <h3 class="font-display" style="font-size:1.25rem;color:#fff;">Dark Frequencies Vol.1</h3>
+        </div>
+      </div>
+      <div style="aspect-ratio:1;position:relative;overflow:hidden;" class="card-hover">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#111 0%,#1A1A0A 100%);display:flex;align-items:center;justify-content:center;">
+          <span class="font-display" style="font-size:5rem;color:#888;opacity:.15;">808</span>
+        </div>
+        <div style="position:absolute;top:1rem;left:1rem;">
+          <span class="font-mono" style="font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;background:#DC2626;color:#fff;">Featured</span>
+        </div>
+      </div>
+      <div style="aspect-ratio:1;position:relative;overflow:hidden;" class="card-hover">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#0A0A1A 0%,#1A0A2A 100%);display:flex;align-items:center;justify-content:center;">
+          <span class="font-display" style="font-size:5rem;color:#DC2626;opacity:.1;">808</span>
+        </div>
+      </div>
+      <div style="aspect-ratio:1;" class="card-hover" style="background:#111;"></div>
+      <div style="aspect-ratio:1;" class="card-hover" style="background:#0D0D0D;border:1px solid #1A1A1A;"></div>
+      <div style="aspect-ratio:1;" class="card-hover" style="background:#111;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section style="padding:6rem 1.5rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#DC2626 0%,#7F1D1D 100%);"></div>
+  <div class="hero-grid" style="opacity:.1;"></div>
+  <div style="max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:10;">
+    <p class="font-mono" style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:1rem;">Pronto a fare musica seria?</p>
+    <h2 class="font-display" style="font-size:clamp(3rem,8vw,6rem);color:#fff;margin-bottom:2rem;">PARLIAMO.</h2>
+    <a href="#contact" style="display:inline-block;padding:1rem 3rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;background:#fff;color:#DC2626;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#F5F5F5'" onmouseout="this.style.background='#fff'">
+      Inizia Ora →
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding:6rem 1.5rem;">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+    <div>
+      <p class="font-mono red-dot" style="font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#DC2626;margin-bottom:1rem;">Parliamo</p>
+      <h2 class="font-display" style="font-size:clamp(3rem,6vw,5rem);color:#fff;margin-bottom:1.5rem;">CONTATTI</h2>
+      <div class="red-line" style="margin-bottom:2.5rem;"></div>
+      <p style="color:#888;font-size:1.125rem;line-height:1.7;margin-bottom:3rem;">Hai un progetto in mente? Vuoi prenotare una sessione? Scrivici — rispondiamo entro 24 ore.</p>
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;">
+        <div style="width:48px;height:48px;border:1px solid #DC2626;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg style="width:20px;height:20px;color:#DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <p class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:.25rem;">Email</p>
+          <span style="color:#fff;">info@lafamiglia808.com</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:#111;border:1px solid #1A1A1A;padding:2.5rem;">
+      <p class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#888;margin-bottom:2rem;">Inviaci un messaggio</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+        <div>
+          <label class="font-mono" style="display:block;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:.5rem;">Nome *</label>
+          <input type="text" placeholder="Il tuo nome" style="width:100%;background:#0A0A0A;border:1px solid #2A2A2A;color:#F5F5F5;padding:.75rem 1rem;font-family:'Space Grotesk',sans-serif;font-size:.875rem;outline:none;">
+        </div>
+        <div>
+          <label class="font-mono" style="display:block;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:.5rem;">Email *</label>
+          <input type="email" placeholder="tua@email.com" style="width:100%;background:#0A0A0A;border:1px solid #2A2A2A;color:#F5F5F5;padding:.75rem 1rem;font-family:'Space Grotesk',sans-serif;font-size:.875rem;outline:none;">
+        </div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="font-mono" style="display:block;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:.5rem;">Messaggio *</label>
+        <textarea rows="5" placeholder="Raccontaci il tuo progetto..." style="width:100%;background:#0A0A0A;border:1px solid #2A2A2A;color:#F5F5F5;padding:.75rem 1rem;font-family:'Space Grotesk',sans-serif;font-size:.875rem;outline:none;resize:none;"></textarea>
+      </div>
+      <button class="btn-red" style="width:100%;text-align:center;">Invia Messaggio →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid #1A1A1A;padding:4rem 1.5rem;background:#0A0A0A;">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;">
+    <div>
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+        <span style="width:8px;height:8px;background:#DC2626;display:block;"></span>
+        <span class="font-display" style="color:#fff;font-size:1.25rem;letter-spacing:.2em;">LAFAMIGLIA808</span>
+      </div>
+      <p style="color:#888;font-size:.875rem;line-height:1.7;max-width:320px;">Studio di produzione musicale indipendente. Beats, mixing, mastering e molto altro.</p>
+    </div>
+    <div>
+      <h4 class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#DC2626;margin-bottom:1rem;">Navigazione</h4>
+      <div style="display:flex;flex-direction:column;gap:.75rem;">
+        <a href="#home" style="color:#888;font-size:.875rem;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#888'">Home</a>
+        <a href="#services" style="color:#888;font-size:.875rem;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#888'">Servizi</a>
+        <a href="#portfolio" style="color:#888;font-size:.875rem;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#888'">Portfolio</a>
+        <a href="#contact" style="color:#888;font-size:.875rem;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#888'">Contatti</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#DC2626;margin-bottom:1rem;">Contatti</h4>
+      <p style="color:#888;font-size:.875rem;">info@lafamiglia808.com</p>
+      <p style="color:#888;font-size:.875rem;margin-top:.5rem;">Roma, Italia</p>
+    </div>
+  </div>
+  <div style="border-top:1px solid #1A1A1A;padding-top:2rem;display:flex;align-items:center;justify-content:space-between;">
+    <p class="font-mono" style="font-size:.7rem;color:#333;">© 2025 LaFamiglia808. All rights reserved.</p>
+    <button onclick="showSection('admin')" class="font-mono" style="font-size:.7rem;color:#333;background:none;border:none;cursor:pointer;transition:color .2s;" onmouseover="this.style.color='#DC2626'" onmouseout="this.style.color='#333'">[ admin ]</button>
+  </div>
+</footer>
+
+</div><!-- end public -->
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  SEZIONE ADMIN                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="section-admin" style="display:none;height:100vh;overflow:hidden;">
+  <div style="display:flex;height:100vh;">
+
+    <!-- Sidebar -->
+    <aside style="width:240px;flex-shrink:0;background:#0D0D0D;border-right:1px solid #1A1A1A;display:flex;flex-direction:column;">
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #1A1A1A;display:flex;align-items:center;gap:.75rem;">
+        <span style="width:6px;height:6px;background:#DC2626;flex-shrink:0;"></span>
+        <div>
+          <div class="font-mono" style="font-size:.7rem;letter-spacing:.15em;color:#fff;">LAFAMIGLIA808</div>
+          <div class="font-mono" style="font-size:.6rem;color:#333;letter-spacing:.1em;">ADMIN PANEL</div>
+        </div>
+      </div>
+      <nav style="flex:1;padding:1rem 0;">
+        <div style="padding:.25rem 1rem .5rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:#333;">MENU</div>
+        <a href="#" class="sidebar-link active">
+          <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Dashboard
+        </a>
+        <a href="#" class="sidebar-link">
+          <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13"/></svg>
+          Servizi
+        </a>
+        <a href="#" class="sidebar-link">
+          <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2"/></svg>
+          Portfolio
+        </a>
+        <a href="#" class="sidebar-link" style="position:relative;">
+          <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Messaggi
+          <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.15rem .5rem;background:#DC2626;color:#fff;">3</span>
+        </a>
+        <div style="padding:.75rem 1rem .25rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:#333;margin-top:1rem;">SITO</div>
+        <a href="#" onclick="showSection('public');return false;" class="sidebar-link">
+          <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          Vai al Sito
+        </a>
+      </nav>
+      <div style="border-top:1px solid #1A1A1A;padding:1rem;">
+        <a href="#" class="sidebar-link" style="color:#DC2626;">
+          <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <header style="background:#0D0D0D;border-bottom:1px solid #1A1A1A;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <span class="font-mono" style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#888;">Dashboard</span>
+        <span class="font-mono" style="font-size:.7rem;color:#333;">admin@lafamiglia808.com</span>
+      </header>
+
+      <main style="flex:1;overflow-y:auto;padding:2rem;">
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;">
+          <div class="admin-card" style="position:relative;overflow:hidden;">
+            <div class="font-mono" style="font-size:1.75rem;font-weight:700;color:#DC2626;margin-bottom:.25rem;">4</div>
+            <div style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.25rem;">Servizi</div>
+            <div class="font-mono" style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#444;">attivi</div>
+          </div>
+          <div class="admin-card">
+            <div class="font-mono" style="font-size:1.75rem;font-weight:700;color:#DC2626;margin-bottom:.25rem;">2</div>
+            <div style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.25rem;">Portfolio</div>
+            <div class="font-mono" style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#444;">progetti</div>
+          </div>
+          <div class="admin-card">
+            <div class="font-mono" style="font-size:1.75rem;font-weight:700;color:#888;margin-bottom:.25rem;">12</div>
+            <div style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.25rem;">Messaggi</div>
+            <div class="font-mono" style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#444;">totali</div>
+          </div>
+          <div class="admin-card">
+            <div class="font-mono" style="font-size:1.75rem;font-weight:700;color:#DC2626;margin-bottom:.25rem;">3</div>
+            <div style="font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:.25rem;">Non Letti</div>
+            <div class="font-mono" style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#444;">messaggi</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions + Info -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;">
+          <div class="admin-card">
+            <p class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:1rem;">Azioni Rapide</p>
+            <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+              <button style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;background:#DC2626;color:#fff;border:none;cursor:pointer;">+ Nuovo Servizio</button>
+              <button style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;background:#DC2626;color:#fff;border:none;cursor:pointer;">+ Nuovo Progetto</button>
+              <button style="font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;background:transparent;color:#888;border:1px solid #2A2A2A;cursor:pointer;">Messaggi</button>
+            </div>
+          </div>
+          <div class="admin-card">
+            <p class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;margin-bottom:1rem;">Credenziali Admin (.env)</p>
+            <pre class="font-mono" style="font-size:.65rem;padding:.75rem;background:#0A0A0A;color:#888;border:1px solid #1A1A1A;overflow:auto;">ADMIN_EMAIL=admin@lafamiglia808.com
+ADMIN_PASSWORD=lafamiglia808</pre>
+          </div>
+        </div>
+
+        <!-- Recent Messages Table -->
+        <div class="admin-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+            <p class="font-mono" style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:#444;">Messaggi Recenti</p>
+            <a href="#" class="font-mono" style="font-size:.65rem;color:#DC2626;text-decoration:none;">Vedi tutti →</a>
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th class="font-mono" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#333;padding:.75rem;text-align:left;border-bottom:1px solid #1A1A1A;">Nome</th>
+                <th class="font-mono" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#333;padding:.75rem;text-align:left;border-bottom:1px solid #1A1A1A;">Email</th>
+                <th class="font-mono" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#333;padding:.75rem;text-align:left;border-bottom:1px solid #1A1A1A;">Oggetto</th>
+                <th class="font-mono" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#333;padding:.75rem;text-align:left;border-bottom:1px solid #1A1A1A;">Data</th>
+                <th class="font-mono" style="font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#333;padding:.75rem;text-align:left;border-bottom:1px solid #1A1A1A;">Stato</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #111;">
+                <td style="padding:.875rem .75rem;color:#fff;font-weight:600;font-size:.875rem;">Marco R.</td>
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">marco@email.com</td>
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">Beat per album rap</td>
+                <td style="padding:.875rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#888;">28/05/2025</td>
+                <td style="padding:.875rem .75rem;"><span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;background:rgba(220,38,38,.15);color:#F87171;">Nuovo</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #111;">
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">Sara K.</td>
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">sara@studio.it</td>
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">Sessione recording</td>
+                <td style="padding:.875rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#888;">27/05/2025</td>
+                <td style="padding:.875rem .75rem;"><span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;background:rgba(255,255,255,.05);color:#666;">Letto</span></td>
+              </tr>
+              <tr>
+                <td style="padding:.875rem .75rem;color:#fff;font-weight:600;font-size:.875rem;">Luca M.</td>
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">luca@beats.com</td>
+                <td style="padding:.875rem .75rem;color:#888;font-size:.875rem;">Collaborazione produzione</td>
+                <td style="padding:.875rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#888;">26/05/2025</td>
+                <td style="padding:.875rem .75rem;"><span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;background:rgba(220,38,38,.15);color:#F87171;">Nuovo</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+function showSection(s) {
+  document.getElementById('section-public').style.display = s==='public'?'block':'none';
+  document.getElementById('section-admin').style.display  = s==='admin' ?'block':'none';
+  document.getElementById('btn-public').style.background = s==='public'?'#DC2626':'#111';
+  document.getElementById('btn-public').style.color      = '#fff';
+  document.getElementById('btn-admin').style.background  = s==='admin' ?'#DC2626':'#111';
+  document.getElementById('btn-admin').style.color       = '#fff';
+}
+</script>
+</body>
+</html>
